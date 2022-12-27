@@ -21,7 +21,7 @@ public class AnimalCreator {
 
     public Animal createNewAnimal(Animal animal1, Animal animal2)
     {
-        //ewentualnie dodac tutaj dla dwoch canCreateAnimal i jesli nie mozna to wyrzucic exception
+        //ewentualnie dodac tutaj dla dwoch canCreateAnimal i jesli nie mozna to wyrzucic exception dla pewności że wszystko jest okej
         //albo sprawdzamy na zewnatrz
         Genome newAnimalGenom = new Genome(animal1,animal2,config.getNumOfGenens());
         Energy energy = new Energy(config.getStartEnergy());
