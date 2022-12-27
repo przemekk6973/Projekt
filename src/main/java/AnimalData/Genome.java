@@ -9,14 +9,14 @@ import java.util.Random;
 import java.util.Collections;
 
 public class Genome {
-
+    //DODAJ NOWA KLASE MUTATE
     private final int numOfGenes;
     //tablica z ruchami
     private int[] behaviour;
     //wskaznik do obecnej pozycji
     private int pointerToCurrentGen = 0;
 
-    //generuje nowe zwierzęta
+    //generuje nowe zwierzęta (np na starcie )
     public Genome(int numOfGenes)
     {
          this.numOfGenes = numOfGenes;
@@ -30,6 +30,15 @@ public class Genome {
     public Genome(Animal parent1, Animal parent2,int numOfGenes) {
         this.numOfGenes = numOfGenes;
         this.behaviour = new int[numOfGenes];
+        createNewGenom(parent1,parent2);
+    }
+
+    public int getNumOfGenes() {
+        return numOfGenes;
+    }
+
+    private void createNewGenom(Animal parent1, Animal parent2)
+    {
         Random random = new Random();
         int sumOfEnergy = parent1.getEnergy() + parent2.getEnergy();
         double proportionParent1 =  (double) parent1.getEnergy() / sumOfEnergy;
@@ -47,9 +56,14 @@ public class Genome {
         geneDonor = (proportionParent1 < 50) ? parent1 : parent2;
         for(int i=pointers[0];i<pointers[1];i++)
             behaviour[i] = geneDonor.getGenome().getBehaviour()[i];
-        mutation();
+
+        //Mutacja genomu
+        Mutation mutate = new Mutation(this);
+        mutate.mutateGenome();
+
 
     }
+
 
     private int[]cutGenome(int sideToStart,int proportion)
     {
@@ -61,24 +75,6 @@ public class Genome {
 
     }
 
-    private void mutation()
-    {
-        Random random = new Random();
-        int numOfGensToMutate = random.nextInt(numOfGenes);
-        for (int i =0; i< numOfGensToMutate; i++)
-        {
-            int takeGen = random.nextInt(numOfGenes);
-            int addOrSubtract = random.nextInt(2);
-           behaviour[takeGen]  = switch (addOrSubtract)
-            {
-                case 0 -> (takeGen +1 < 8)? takeGen+1 : 0;
-                case 1 -> (takeGen - 1 >=0)? takeGen-1 : 8;
-                default -> throw new IllegalStateException("Unexpected value: " + addOrSubtract);
-            };
-
-        }
-
-    }
     public int []getBehaviour() {
         return behaviour;
     }

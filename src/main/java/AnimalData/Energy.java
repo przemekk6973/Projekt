@@ -4,18 +4,19 @@ public class Energy {
 
     private int energy;
 
+
     public int getEnergy() {
         return energy;
     }
 
 
-    public Energy()
+    public Energy(int energy)
     {
-        Random random = new Random();
-        this.energy = random.nextInt(40)+1;
+       this.energy = energy;
 
     }
 
-
-
+    public void setEnergy(int energy) {
+        this.energy = energy;
+    }
 }
