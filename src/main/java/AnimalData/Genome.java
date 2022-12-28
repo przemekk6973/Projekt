@@ -79,6 +79,10 @@ public class Genome {
         return behaviour;
     }
 
+    public int getPointerToCurrentGen() {
+        return pointerToCurrentGen;
+    }
+
     //w 80% przypadkow biore nastepny gen w 20% losuje nowy
     public void changePointer()
     {

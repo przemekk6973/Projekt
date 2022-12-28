@@ -36,6 +36,21 @@ public enum MapDirection {
         };
 
     }
+
+    public MapDirection reverse()
+    {
+        return switch (this) {
+            case NORTH ->  SOUTH;
+            case NORTHWEST -> SOUTHEAST;
+            case WEST -> EAST;
+            case SOUTHWEST -> NORTHEAST;
+            case SOUTH ->  NORTH;
+            case SOUTHEAST -> NORTHWEST;
+            case EAST ->   WEST;
+            case NORTHEAST -> SOUTHWEST;
+        };
+    }
+
     public Vector2d toUnitVector()
     {
         return switch (this) {
@@ -52,6 +67,7 @@ public enum MapDirection {
 
 
     }
+
     @Override
     public String toString() {
         return switch (this) {

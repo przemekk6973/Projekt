@@ -2,17 +2,20 @@ package Map;
 
 import Core.Vector2d;
 import Objects.Animal;
+import Objects.IMapElement;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 public interface IWorldMap {
 
 
-    boolean canMoveTo(Vector2d position);
 
-    boolean place(Animal animal);
+    //boolean isOccupied(Vector2d position);
+    //IMapElement objectAt(Vector2d position);
+    Vector2d newAnimalPosition(Vector2d position,Animal animal);
+    Map<Vector2d, List<Animal>> getAnimals();
 
-    boolean isOccupied(Vector2d position);
-
-
-    Object objectAt(Vector2d position);
 
 }

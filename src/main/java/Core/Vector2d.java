@@ -3,8 +3,8 @@ package Core;
 import java.util.Objects;
 
 public class Vector2d {
-    public final int x;
-    public final int y;
+    private final int x;
+    private final int y;
 
 
     public Vector2d(int x,int y) {
@@ -13,6 +13,13 @@ public class Vector2d {
 
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 
     public boolean precedes(Vector2d other){
         return (this.x <= other.x) && (this.y <= other.y);

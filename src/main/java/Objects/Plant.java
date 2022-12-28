@@ -2,7 +2,7 @@ package Objects;
 
 import Core.Vector2d;
 
-public class Plant  {
+public class Plant implements IMapElement  {
 
     private Vector2d position;
 
