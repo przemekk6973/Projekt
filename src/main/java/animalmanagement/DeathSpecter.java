@@ -1,5 +1,6 @@
 package animalmanagement;
 
+import Core.Config;
 import Objects.Animal;
 import Simulation.IDayChangeAction;
 
@@ -8,6 +9,14 @@ import java.util.ArrayList;
 public class DeathSpecter implements IDayChangeAction {
 
     private ArrayList<Animal> animalsDestinedToDeath = new ArrayList<Animal>();
+    private Config config;
+
+
+
+    public DeathSpecter(Config config)
+    {
+        this.config = config;
+    }
 
     @Override
     public void OnPassingDay() {
@@ -15,11 +24,15 @@ public class DeathSpecter implements IDayChangeAction {
         checkForDeath();
 
 
+
     }
+
 
     private void checkForDeath()
     {
-        for(Animal animal : animalsDestinedToDeath)
+        takeEnergy();
+        ArrayList <Animal> copyAnimalsDestinedToDeath = new ArrayList<>(animalsDestinedToDeath);
+        for(Animal animal : copyAnimalsDestinedToDeath)
         {
             if (animal.getEnergy() <=0)
             {
@@ -33,6 +46,19 @@ public class DeathSpecter implements IDayChangeAction {
     public void PutDeathSpec(Animal animal)
     {
         animalsDestinedToDeath.add(animal);
+
+    }
+
+    private void takeEnergy()
+    {
+        for(Animal animal : animalsDestinedToDeath)
+        {
+
+            animal.setAnimalEnergy(animal.getEnergy() - config.getEnergyLossEachDay());
+
+        }
+
+
 
     }
 

@@ -7,9 +7,10 @@ import Objects.Animal;
 import Objects.Plant;
 import Simulation.IDayChangeAction;
 
+import javax.swing.text.Position;
 import java.util.*;
 
-public abstract class AbstractWorldMap implements IDayChangeAction,IWorldMap, IPositionChangeObserver {
+public abstract class AbstractWorldMap implements IWorldMap{
     protected final int width;
     protected final int height;
 
@@ -18,8 +19,8 @@ public abstract class AbstractWorldMap implements IDayChangeAction,IWorldMap, IP
     private int growPlantEachDay;
 
     protected Config config;
-    protected HashMap<Vector2d, List<Animal>> animals = new HashMap<>();
-    protected HashMap<Vector2d, Plant> plants = new HashMap<>();
+    protected Map<Vector2d, List<Animal>> animals = new HashMap<>();
+    protected Map<Vector2d, Plant> plants = new HashMap<>();
 
 
     public AbstractWorldMap(int width, int height, int startNumOfPlants, int growPlantEachDay, Config config) {
@@ -29,6 +30,12 @@ public abstract class AbstractWorldMap implements IDayChangeAction,IWorldMap, IP
         this.growPlantEachDay = growPlantEachDay;
         this.config = config;
         generatePlantsOnStart(startNumOfPlants);
+
+        //testowe usun
+
+
+        Plant plant = new Plant(new Vector2d(2,3));
+        plants.put(plant.getPosition(),plant);
 
     }
     //w losowym miejscu generują się roślinki
@@ -48,26 +55,7 @@ public abstract class AbstractWorldMap implements IDayChangeAction,IWorldMap, IP
 
     }
 
-    //@Override
-//    public boolean isOccupied(Vector2d position) {
-//        return this.objectAt(position) != null;
-//    }
-//
-//    @Override
-//    public IMapElement objectAt(Vector2d position) {
-//        //throw jest nie ma
-//        if (animals.containsKey(position))
-//        {
-//            return animals.get(position);
-//        }
-//        else if (plants.containsKey(position)) {
-//            return plants.get(position);
-//        }
-//        return null;
-//
-//
-//
-//    }
+
     public  void OnPassingDay()
     {
         cleanMap();
@@ -76,9 +64,13 @@ public abstract class AbstractWorldMap implements IDayChangeAction,IWorldMap, IP
     public void cleanMap()
     {
 
-        for(List<Animal> animalsOnPosition: animals.values())
+
+        //popraw strimy tak samor reszta
+        HashMap<Vector2d,List<Animal>> copyAnimals = new HashMap<>(animals);
+        for(List<Animal> animalsOnPosition: copyAnimals.values())
         {
-            for(Animal animal : animalsOnPosition ) {
+            List <Animal> copyAnimalsOnPosition = new ArrayList<>(animalsOnPosition);
+            for(Animal animal : copyAnimalsOnPosition ) {
                 if (!animal.getAlive()) {
                     //dodaj hash i eq
                     animals.remove(animal.getPosition());
@@ -92,18 +84,52 @@ public abstract class AbstractWorldMap implements IDayChangeAction,IWorldMap, IP
     @Override
     public void positionChanged(Vector2d oldPosition, Vector2d newPosition,Animal animal) {
 
-        List<Animal> animalSamePositions = animals.get(oldPosition);
-        int index = animalSamePositions.indexOf(animal);
-        //Dokończ metode
-        //animals.computeIfAbsent(newPosition, k -> new ArrayList<>()).add(newPosition);
+//        if(animalToAddNewAnimal == null)
+//        {
+//            animalToAddNewAnimal = new ArrayList<Animal>();
+//            animals.put(newPosition,animalToAddNewAnimal);
 //
-//        animals.remove(oldPosition);
-//        animals.put(newPosition,animal);
+//        }
+//        animalToAddNewAnimal.add(animal);
+
+
+        List<Animal> animalSamePositions = animals.get(oldPosition);
+        animalSamePositions.remove(animal);;
+        List<Animal> animalToAddNewAnimal = animals.get(newPosition);
+        if(animalToAddNewAnimal == null)
+        {
+            animalToAddNewAnimal = new ArrayList<Animal>();
+            animals.put(newPosition,animalToAddNewAnimal);
+
+        }
+        animalToAddNewAnimal.add(animal);
     }
 
     @Override
     public Map<Vector2d,List<Animal>> getAnimals() {
         return Collections.unmodifiableMap(animals);
+    }
+
+    public Map<Vector2d,Plant> getPlants() {
+        return Collections.unmodifiableMap(plants);
+    }
+
+    public void putAnimalOnMap(Animal animal)
+    {
+        List<Animal> onSamePosition = animals.get(animal.getPosition());
+        if (onSamePosition == null)
+        {
+            onSamePosition = new ArrayList<Animal>();
+            animals.put(animal.getPosition(),onSamePosition);
+        }
+        onSamePosition.add(animal);
+
+    }
+
+    public void removePlantFromMap(Vector2d position)
+    {
+        plants.remove(position);
+
     }
 
 }

@@ -18,6 +18,8 @@ public class Animal implements IMapElement {
     private Genome genome;
     private Energy energy;
 
+    private int age=0;
+
     private Boolean isAlive;
     private MapDirection orientation = MapDirection.NORTH;
 
@@ -48,6 +50,12 @@ public class Animal implements IMapElement {
         this.energy = energy;
         this.position = position;
         this.isAlive = true;
+        this.map = map;
+
+
+
+        addPositionObserver(this.map);
+        this.map.putAnimalOnMap(this);
 
     }
 
@@ -123,6 +131,17 @@ public class Animal implements IMapElement {
         return isAlive;
     }
 
+
+    public int getAge() {
+        return age;
+    }
+
+    public void eat(int energyGaiend)
+    {
+        setAnimalEnergy(energy.getEnergy() + energyGaiend);
+
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -133,5 +152,10 @@ public class Animal implements IMapElement {
     @Override
     public int hashCode() {
         return Objects.hash(genome, energy, isAlive, orientation, toDisplay, position, map, observers);
+    }
+
+    @Override
+    public String getResources() {
+        return "src/main/resources/animal.png";
     }
 }

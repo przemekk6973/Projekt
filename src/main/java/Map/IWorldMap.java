@@ -1,21 +1,27 @@
 package Map;
 
+import Core.IPositionChangeObserver;
 import Core.Vector2d;
 import Objects.Animal;
 import Objects.IMapElement;
+import Objects.Plant;
+import Simulation.IDayChangeAction;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public interface IWorldMap {
-
+public interface IWorldMap extends IPositionChangeObserver, IDayChangeAction {
+    //dodaj z abstracta
 
 
     //boolean isOccupied(Vector2d position);
     //IMapElement objectAt(Vector2d position);
     Vector2d newAnimalPosition(Vector2d position,Animal animal);
-    Map<Vector2d, List<Animal>> getAnimals();
+    void putAnimalOnMap(Animal animal);
 
+    void removePlantFromMap(Vector2d Position);
+    Map<Vector2d, List<Animal>> getAnimals();
+    Map<Vector2d, Plant> getPlants();
 
 }

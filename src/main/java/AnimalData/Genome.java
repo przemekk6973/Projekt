@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Collections;
+import java.util.stream.IntStream;
 
 public class Genome {
     //DODAJ NOWA KLASE MUTATE
@@ -21,7 +22,7 @@ public class Genome {
     {
          this.numOfGenes = numOfGenes;
          this.behaviour = new Random()
-                .ints(numOfGenes, 0, 7)
+                .ints(numOfGenes, 0, 6)
                 .toArray();
 
     }
@@ -80,7 +81,9 @@ public class Genome {
     }
 
     public int getPointerToCurrentGen() {
-        return pointerToCurrentGen;
+        int prevPointer = pointerToCurrentGen;
+        changePointer();
+        return prevPointer;
     }
 
     //w 80% przypadkow biore nastepny gen w 20% losuje nowy
@@ -93,7 +96,9 @@ public class Genome {
         else
         {
             ArrayList<Integer> possibleBehaviour = new ArrayList<>();
-            Arrays.stream(behaviour).filter(x -> x != pointerToCurrentGen).forEach(possibleBehaviour::add);
+//            Arrays.stream(behaviour).filter(x -> x != pointerToCurrentGen).forEach(possibleBehaviour::add);
+            IntStream.rangeClosed(1, behaviour.length-1)
+                    .filter(x -> x!= pointerToCurrentGen).forEach(possibleBehaviour::add);
             Collections.shuffle(possibleBehaviour);
             pointerToCurrentGen = possibleBehaviour.get(0);
         }

@@ -17,10 +17,13 @@ public class TimeManager {
         }
         this.passedDay+=1;
 
-
-
     }
 
+    public void loadActions(IDayChangeAction action)
+    {
+        actions.add(action);
+
+    }
 
 
 
