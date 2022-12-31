@@ -48,7 +48,8 @@ public class Interaction implements IDayChangeAction {
              Animal secondParent = stat.getStrongestAnimal(copyOfReproductiveAnimals);
              copyOfReproductiveAnimals.remove(secondParent);
              creator.createNewAnimal(firstParent,secondParent,specter);
-             System.out.println("Dziecko");
+             System.out.println("TWORZĄ OBIEKT!!!!");
+
          }
 
         }

@@ -1,13 +1,11 @@
 package Map;
 
 import Core.Config;
-import Core.IPositionChangeObserver;
 import Core.Vector2d;
 import Objects.Animal;
 import Objects.Plant;
-import Simulation.IDayChangeAction;
+import  Objects.IMapElement;
 
-import javax.swing.text.Position;
 import java.util.*;
 
 public abstract class AbstractWorldMap implements IWorldMap{
@@ -31,20 +29,15 @@ public abstract class AbstractWorldMap implements IWorldMap{
         this.config = config;
         generatePlantsOnStart(startNumOfPlants);
 
-        //testowe usun
 
-
-        Plant plant = new Plant(new Vector2d(2,3));
-        plants.put(plant.getPosition(),plant);
 
     }
     //w losowym miejscu generują się roślinki
     private void generatePlantsOnStart(int numOfPlants)
     {
-        Random rand = new Random();
         List<Vector2d> Combinations = new ArrayList<>();
-        for (int x = 0; x < numOfPlants; x++) {
-            for (int y = 0; y < numOfPlants; y++) {
+        for (int x = 0; x < height; x++) {
+            for (int y = 0; y < width; y++) {
                 Combinations.add(new Vector2d(x, y));
             }
         }
@@ -52,6 +45,7 @@ public abstract class AbstractWorldMap implements IWorldMap{
         for (int i = 0; i < numOfPlants; i++) {
             plants.put(Combinations.get(i),new Plant(Combinations.get(i)));
         }
+        System.out.println("Wielkosc" + plants.size());
 
     }
 
@@ -63,22 +57,30 @@ public abstract class AbstractWorldMap implements IWorldMap{
     }
     public void cleanMap()
     {
-
-
-        //popraw strimy tak samor reszta
         HashMap<Vector2d,List<Animal>> copyAnimals = new HashMap<>(animals);
-        for(List<Animal> animalsOnPosition: copyAnimals.values())
+
+        for(Vector2d animalsPosition: copyAnimals.keySet())
         {
-            List <Animal> copyAnimalsOnPosition = new ArrayList<>(animalsOnPosition);
-            for(Animal animal : copyAnimalsOnPosition ) {
+            List<Animal> animalsOnPosition = new ArrayList<>(animals.get(animalsPosition));
+
+            for(Animal animal: animalsOnPosition)
+            {
                 if (!animal.getAlive()) {
                     //dodaj hash i eq
-                    animals.remove(animal.getPosition());
+                    animals.get(animalsPosition).remove(animal);
+                    System.out.println(animals.get(animalsPosition).size());
+
                 }
+
 
             }
 
+
         }
+
+
+
+        //popraw strimy tak samor reszta
 
     }
     @Override
@@ -105,6 +107,8 @@ public abstract class AbstractWorldMap implements IWorldMap{
         animalToAddNewAnimal.add(animal);
     }
 
+
+
     @Override
     public Map<Vector2d,List<Animal>> getAnimals() {
         return Collections.unmodifiableMap(animals);
@@ -125,11 +129,38 @@ public abstract class AbstractWorldMap implements IWorldMap{
         onSamePosition.add(animal);
 
     }
-
     public void removePlantFromMap(Vector2d position)
     {
         plants.remove(position);
 
     }
 
+    public IMapElement objectsAt(Vector2d position) {
+        //DO ZMIANY
+
+        if (animals.get(position) != null && animals.get(position).size() > 0)
+        {
+            return animals.get(position).get(0);
+        }
+        if(plants.get(position) != null)
+        {
+
+            return plants.get(position);
+        }
+
+        //POPRAW BO GDY DODASZ NOWY ELEMENT NA MAPE NIE BEDZIE BLEDU!
+
+        return null;
+
+
+
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
 }

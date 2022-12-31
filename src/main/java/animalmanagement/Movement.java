@@ -23,13 +23,19 @@ public class Movement implements IDayChangeAction {
     @Override
     public void OnPassingDay() {
         //popraw iteratorem potem
-        Map<Vector2d, List<Animal>> animals = new HashMap<>(map.getAnimals());
-        for(List<Animal> animalsOnPosition : animals.values() )
+        List<Animal> moved = new ArrayList<Animal>();
+        Map<Vector2d, List<Animal>> copyAnimals = new HashMap<>(map.getAnimals());
+        for(List<Animal> animalsOnPosition : copyAnimals.values() )
         {
             List<Animal> animalsCopy = new ArrayList<>(animalsOnPosition);
 
             for (Animal animal : animalsCopy) {
-                animal.move(animal.getGenome().getBehaviour()[animal.getGenome().getPointerToCurrentGen()]);
+                if (!moved.contains(animal)) {
+                    System.out.println("Przemieszczam się z " + animal.getPosition());
+                    animal.move(animal.getGenome().getBehaviour()[animal.getGenome().getPointerToCurrentGen()]);
+                    System.out.println("Przemieszczam się do " + animal.getPosition());
+                    moved.add(animal);
+                }
             }
 
 

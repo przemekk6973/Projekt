@@ -17,11 +17,13 @@ public class PortalMap extends AbstractWorldMap {
 
     @Override
     public Vector2d newAnimalPosition(Vector2d position,Animal animal) {
-        if (position.getX() > width || position.getY() > height || position.getX() < 0 || position.getY() < 0)
+        if (position.getX() >= width || position.getY() >= height || position.getX() < 0 || position.getY() < 0)
         {
 
             animal.setAnimalEnergy(animal.getEnergy() - config.getEnergyReqToCreateAnimal());
+            System.out.println("Teleport");
             return generateNewAnimalPosition();
+
         }
         else{
             return position;
@@ -32,7 +34,7 @@ public class PortalMap extends AbstractWorldMap {
     private Vector2d generateNewAnimalPosition()
     {
         Random rand = new Random();
-        return new Vector2d(rand.nextInt(width), rand.nextInt(height));
+        return new Vector2d(rand.nextInt(width-1), rand.nextInt(height-1));
 
 
     }

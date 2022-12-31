@@ -17,18 +17,18 @@ public class GuiElementBox {
 
     private IMapElement element;
 
-
-
     public GuiElementBox(IMapElement element) throws FileNotFoundException {
         this.element = element;
+        //obsluz
         this.image = new Image(new FileInputStream(element.getResources()));
-
-        //this.image = new Image(new FileInputStream(element.getResources()));
+        this.imageView = new ImageView(image);
     }
     //Wczytywanie plików, dostosowywanie wymiarów itd.
 
-    public VBox getImageView() throws FileNotFoundException {
-        return null;
+    public ImageView getImage()  {
+
+        return imageView;
+
     }
 
 }

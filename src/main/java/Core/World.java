@@ -20,10 +20,7 @@ public class World {
 
         //uruchamianie klasy App
 
-         Config config = new Config(1,90,6,60,3,1);
-         IWorldMap map = new PortalMap(10,10,18,3,config);
-         SimulationEngine engine = new SimulationEngine(config,map);
-         engine.run();
+
 
 
         Application.launch(App.class, args);

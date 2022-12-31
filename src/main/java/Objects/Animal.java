@@ -31,14 +31,17 @@ public class Animal implements IMapElement {
 
 
 
+
     private ArrayList<IPositionChangeObserver> observers = new ArrayList<>();
     //zwierze wygenerowane
     public Animal(Genome genome,Energy energy,IWorldMap map)
     {
+        System.out.println("PYTK");
         this.genome = genome;
         this.energy = energy;
         this.isAlive = true;
         this.map = map;
+        this.toDisplay = loadImg();
         setRandomPosition();
 
 
@@ -51,6 +54,7 @@ public class Animal implements IMapElement {
         this.position = position;
         this.isAlive = true;
         this.map = map;
+        this.toDisplay = loadImg();
 
 
 
@@ -157,5 +161,9 @@ public class Animal implements IMapElement {
     @Override
     public String getResources() {
         return "src/main/resources/animal.png";
+    }
+
+    public GuiElementBox getToDisplay() {
+        return toDisplay;
     }
 }
