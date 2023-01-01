@@ -2,7 +2,9 @@ package Gui;
 
 import Objects.IMapElement;
 import javafx.geometry.Pos;
+import javafx.scene.CacheHint;
 import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -26,6 +28,7 @@ public class GuiElementBox {
     //Wczytywanie plików, dostosowywanie wymiarów itd.
 
     public ImageView getImage()  {
+
 
         return imageView;
 

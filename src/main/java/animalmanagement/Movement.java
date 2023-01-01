@@ -31,9 +31,9 @@ public class Movement implements IDayChangeAction {
 
             for (Animal animal : animalsCopy) {
                 if (!moved.contains(animal)) {
-                    System.out.println("Przemieszczam się z " + animal.getPosition());
+                    //System.out.println("Przemieszczam się z " + animal.getPosition());
                     animal.move(animal.getGenome().getBehaviour()[animal.getGenome().getPointerToCurrentGen()]);
-                    System.out.println("Przemieszczam się do " + animal.getPosition());
+                    //System.out.println("Przemieszczam się do " + animal.getPosition());
                     moved.add(animal);
                 }
             }

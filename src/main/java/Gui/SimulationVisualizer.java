@@ -1,22 +1,14 @@
 package Gui;
 
-import AnimalData.Energy;
-import AnimalData.Genome;
-import Core.Config;
 import Core.Vector2d;
 import Map.IWorldMap;
-import Map.PortalMap;
-import Objects.Animal;
 import Objects.IMapElement;
-import Objects.Plant;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import java.util.List;
 
 public class SimulationVisualizer {
 
@@ -32,13 +24,10 @@ public class SimulationVisualizer {
         setSizeOfSingleCell(map.getWidth(),map.getHeight(),64);
         gridPane.setGridLinesVisible(true);
 
-
-
-
     }
 
 
-    public GridPane showMap()
+    public GridPane setMap()
     {
         gridPane.requestLayout();
         gridPane.getChildren().retainAll(gridPane.getChildren().get(0));
@@ -51,6 +40,7 @@ public class SimulationVisualizer {
             IMapElement object = map.objectsAt(new Vector2d(0,i));
             if (object != null)
             {
+
                 Label label = new Label("");
                 label.setGraphic(object.getToDisplay().getImage());
                 gridPane.add(label,0,i );
@@ -66,6 +56,7 @@ public class SimulationVisualizer {
                  object = map.objectsAt(new Vector2d(j,i));
                 if (object != null)
                 {
+
                     Label label = new Label("");
                     label.setGraphic(object.getToDisplay().getImage());
                     gridPane.add(label,j,i );

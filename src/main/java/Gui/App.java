@@ -1,26 +1,19 @@
 package Gui;
 
 import Core.Config;
-import Core.Vector2d;
 import Map.IWorldMap;
 import Map.PortalMap;
-import Objects.IMapElement;
 import Simulation.SimulationEngine;
+import Simulation.SimulationListener;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.geometry.HPos;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.ColumnConstraints;
+
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 
-import java.awt.*;
-import java.util.List;
 
-public class App extends Application {
+public class App extends Application implements SimulationListener {
 
 
     private IWorldMap map;
@@ -28,15 +21,20 @@ public class App extends Application {
 
     private GridPane gridPane;
     public void init() throws Exception {
-        Config config = new Config(1,10,12,20,20,6);
-        IWorldMap map = new PortalMap(20,20,60,3,config);
+        //najpierw trawe
+        Config config = new Config(3000,500,50,450,4,20);
+        IWorldMap map = new PortalMap(15,15,80,3,config);
         this.map = map;
         SimulationEngine engine = new SimulationEngine(config,map,this);
+        engine.addSimulationObservers(this);
+
 
         Thread engineThread = new Thread(engine);
         engineThread.start();
+
+
         visualizer = new SimulationVisualizer(map);
-        gridPane = visualizer.showMap();
+        gridPane = visualizer.setMap();
 
 
 
@@ -46,7 +44,7 @@ public class App extends Application {
     }
     @Override
     public void start(Stage primaryStage) throws Exception {
-        visualizer.showMap();
+        visualizer.setMap();
         Scene scene = new Scene(gridPane);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -62,7 +60,7 @@ public class App extends Application {
         Platform.runLater(() -> {
 
 
-            gridPane = visualizer.showMap();
+            gridPane = visualizer.setMap();
 
         });
 

@@ -5,6 +5,7 @@ import Core.Vector2d;
 import Objects.Animal;
 import Objects.Plant;
 import  Objects.IMapElement;
+import mapmanagement.PlantGenerator;
 
 import java.util.*;
 
@@ -17,6 +18,8 @@ public abstract class AbstractWorldMap implements IWorldMap{
     private int growPlantEachDay;
 
     protected Config config;
+
+    private PlantGenerator plantGenerator;
     protected Map<Vector2d, List<Animal>> animals = new HashMap<>();
     protected Map<Vector2d, Plant> plants = new HashMap<>();
 
@@ -27,25 +30,10 @@ public abstract class AbstractWorldMap implements IWorldMap{
         this.startNumOfPlants = startNumOfPlants;
         this.growPlantEachDay = growPlantEachDay;
         this.config = config;
-        generatePlantsOnStart(startNumOfPlants);
+        this.plantGenerator = new PlantGenerator(width,height,this);
+        plantGenerator.generatePlantsOnStart(startNumOfPlants);
 
 
-
-    }
-    //w losowym miejscu generują się roślinki
-    private void generatePlantsOnStart(int numOfPlants)
-    {
-        List<Vector2d> Combinations = new ArrayList<>();
-        for (int x = 0; x < height; x++) {
-            for (int y = 0; y < width; y++) {
-                Combinations.add(new Vector2d(x, y));
-            }
-        }
-        Collections.shuffle(Combinations);
-        for (int i = 0; i < numOfPlants; i++) {
-            plants.put(Combinations.get(i),new Plant(Combinations.get(i)));
-        }
-        System.out.println("Wielkosc" + plants.size());
 
     }
 
@@ -68,7 +56,8 @@ public abstract class AbstractWorldMap implements IWorldMap{
                 if (!animal.getAlive()) {
                     //dodaj hash i eq
                     animals.get(animalsPosition).remove(animal);
-                    System.out.println(animals.get(animalsPosition).size());
+                    plantGenerator.markAsDeathField(animal.getPosition());
+
 
                 }
 
@@ -78,6 +67,8 @@ public abstract class AbstractWorldMap implements IWorldMap{
 
         }
 
+        plantGenerator.generateToxicCorpes(growPlantEachDay);
+
 
 
         //popraw strimy tak samor reszta
@@ -85,15 +76,6 @@ public abstract class AbstractWorldMap implements IWorldMap{
     }
     @Override
     public void positionChanged(Vector2d oldPosition, Vector2d newPosition,Animal animal) {
-
-//        if(animalToAddNewAnimal == null)
-//        {
-//            animalToAddNewAnimal = new ArrayList<Animal>();
-//            animals.put(newPosition,animalToAddNewAnimal);
-//
-//        }
-//        animalToAddNewAnimal.add(animal);
-
 
         List<Animal> animalSamePositions = animals.get(oldPosition);
         animalSamePositions.remove(animal);;
@@ -162,5 +144,14 @@ public abstract class AbstractWorldMap implements IWorldMap{
 
     public int getWidth() {
         return width;
+    }
+
+    public void putPlantOnMap(Vector2d position)
+    {
+
+        if (position != null)
+            plants.put(position,new Plant(position));
+
+
     }
 }
