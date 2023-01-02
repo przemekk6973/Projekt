@@ -3,6 +3,7 @@ package Gui;
 import Core.Config;
 import Map.IWorldMap;
 import Map.PortalMap;
+import Map.RoundMap;
 import Simulation.SimulationEngine;
 import Simulation.SimulationListener;
 import javafx.application.Application;
@@ -22,8 +23,8 @@ public class App extends Application implements SimulationListener {
     private GridPane gridPane;
     public void init() throws Exception {
         //najpierw trawe
-        Config config = new Config(3000,500,50,450,4,20);
-        IWorldMap map = new PortalMap(15,15,80,3,config);
+        Config config = new Config(500,400,50,100,3,25);
+        IWorldMap map = new RoundMap(15,15,10,3,config);
         this.map = map;
         SimulationEngine engine = new SimulationEngine(config,map,this);
         engine.addSimulationObservers(this);

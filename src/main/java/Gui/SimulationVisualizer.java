@@ -23,6 +23,7 @@ public class SimulationVisualizer {
         this.gridPane = new GridPane();
         setSizeOfSingleCell(map.getWidth(),map.getHeight(),64);
         gridPane.setGridLinesVisible(true);
+        gridPane.setStyle("-fx-background-color: #CD853F;");
 
     }
 
@@ -75,7 +76,6 @@ public class SimulationVisualizer {
 
 
         gridPane.setAlignment(Pos.CENTER);
-        System.out.println("Koniec");
         return gridPane;
 
 
@@ -83,7 +83,7 @@ public class SimulationVisualizer {
 
     private void setSizeOfSingleCell(int mapWidth, int mapHeight,int size)
     {
-        System.out.println("szerokosc" + mapWidth);
+
         for(int i=0; i < mapWidth;i++)
         {
             ColumnConstraints column = new ColumnConstraints(size);

@@ -35,6 +35,7 @@ public class Movement implements IDayChangeAction {
                     animal.move(animal.getGenome().getBehaviour()[animal.getGenome().getPointerToCurrentGen()]);
                     //System.out.println("Przemieszczam się do " + animal.getPosition());
                     moved.add(animal);
+                    //System.out.println(animal.getEnergy());
                 }
             }
 

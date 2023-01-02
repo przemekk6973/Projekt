@@ -19,9 +19,7 @@ public class PortalMap extends AbstractWorldMap {
     public Vector2d newAnimalPosition(Vector2d position,Animal animal) {
         if (position.getX() >= width || position.getY() >= height || position.getX() < 0 || position.getY() < 0)
         {
-
-            animal.setAnimalEnergy(animal.getEnergy() - config.getEnergyReqToCreateAnimal());
-            System.out.println("Teleport");
+            animal.setAnimalEnergy(animal.getEnergy() - config.getEnergyReqToCreateAnimal());;
             return generateNewAnimalPosition();
 
         }

@@ -47,16 +47,16 @@ public class SimulationEngine implements  IEngine {
         timeManager.loadActions(specter);
         while (true) {
             try {
-                Thread.sleep(10);
+                Thread.sleep(20);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
 
 
-            System.out.println("First time");
+
             timeManager.changeDay();
             try {
-                Thread.sleep(10);
+                Thread.sleep(20);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -83,6 +83,7 @@ public class SimulationEngine implements  IEngine {
                               new Energy(config.getStartEnergy()),
                               new Vector2d(random.nextInt(map.getWidth()), random.nextInt(map.getHeight())),
                               map));
+
           }
 
        }

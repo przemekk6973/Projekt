@@ -28,15 +28,13 @@ public class Creator {
         //albo sprawdzamy na zewnatrz
         Genome newAnimalGenom = new Genome(animal1,animal2,config.getNumOfGenens());
         Energy energy = new Energy(config.getStartEnergy());
-        animal1.setAnimalEnergy(animal1.getEnergy() - config.getNumOfGenens());
-        animal2.setAnimalEnergy(animal1.getEnergy() - config.getNumOfGenens());
+        animal1.setAnimalEnergy(animal1.getEnergy() - config.getEnergyReqToCreateAnimal());
+        animal2.setAnimalEnergy(animal1.getEnergy() - config.getEnergyReqToCreateAnimal());
         Animal bornAnimal = new Animal(newAnimalGenom,energy,animal1.getPosition(),animal1.getMap());
         specter.PutDeathSpec(bornAnimal);
         return bornAnimal;
 
     }
-//mozna sprawdzac jeszcze np czy zwierzeta sa na tej samej pozycji zeby móc tworzyć inne zwierze itd
-
 
 
 

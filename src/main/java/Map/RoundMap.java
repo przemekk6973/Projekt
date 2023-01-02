@@ -13,18 +13,39 @@ public class RoundMap extends AbstractWorldMap {
 
     @Override
     public Vector2d newAnimalPosition(Vector2d position, Animal animal) {
-        if (position.getX() > width) {
-            return new Vector2d(0, position.getY());
+        // -1 -1
 
-        } else if (position.getX() < 0) {
-            return new Vector2d(width, position.getY());
-        } else if (position.getY() > height || position.getY() < 0) {
+
+        //-1 0
+
+        if (position.getY() < 0)
+        {
             animal.setOrientation(animal.getOrientation().reverse());
-            return position;
+            position =  new Vector2d(position.getX(),0); // -1 0
         }
 
-            return position;
+        else if(position.getY()  >= height)
+        {
+            animal.setOrientation(animal.getOrientation().reverse());
+            position =  new Vector2d(position.getX(),width-1);
+        }
+
+         if(position.getX() >= width)
+        {
+            position =  new Vector2d(0,position.getY());
+
+        }
+
+        else if(position.getX() < 0  )
+        {
+            position=  new Vector2d(width-1, position.getY() );
+            // width -1
+        }
+        //System.out.println("Zwracam" + position);
+        return  position;
 
 
     }
+
+
 }

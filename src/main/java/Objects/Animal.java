@@ -36,7 +36,7 @@ public class Animal implements IMapElement {
     //zwierze wygenerowane
     public Animal(Genome genome,Energy energy,IWorldMap map)
     {
-        System.out.println("PYTK");
+
         this.genome = genome;
         this.energy = energy;
         this.isAlive = true;
@@ -86,6 +86,7 @@ public class Animal implements IMapElement {
             this.orientation = this.orientation.next();
         }
         newPosition = this.position.add(this.orientation.toUnitVector());
+        //System.out.println("Chce isc do" + newPosition);
         newPosition = this.map.newAnimalPosition(newPosition,this);
         positionChanged(position,newPosition);
         this.position = newPosition;
@@ -142,6 +143,7 @@ public class Animal implements IMapElement {
 
     public void eat(int energyGaiend)
     {
+
         setAnimalEnergy(energy.getEnergy() + energyGaiend);
 
     }

@@ -56,6 +56,7 @@ public class DeathSpecter implements IDayChangeAction {
 
             animal.setAnimalEnergy(animal.getEnergy() - config.getEnergyLossEachDay());
 
+
         }
 
 
