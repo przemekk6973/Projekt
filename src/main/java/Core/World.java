@@ -4,6 +4,7 @@ import AnimalData.Energy;
 import AnimalData.Genome;
 
 import Gui.App;
+import Gui.Menu;
 import Map.IWorldMap;
 import Map.PortalMap;
 import Objects.Animal;
@@ -23,8 +24,8 @@ public class World {
 
 
 
-        Application.launch(App.class, args);
-
+        //Application.launch(App.class, args);
+        Application.launch(Menu.class,args);
 
 
 
